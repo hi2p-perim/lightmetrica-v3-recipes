@@ -1,0 +1,26 @@
+{% set version = "5.3.0" %}
+{% set sha256 = "defa24a9af4c622a7134076602070b45721a43c51598c8456ec6f2c4dbb51c89" %}
+
+package:
+  name: fmt
+  version: {{ version }}
+
+source:
+  url: https://github.com/fmtlib/fmt/archive/{{ version }}.tar.gz
+  sha256: {{ sha256 }}
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler('cxx') }}
+    - cmake
+  host: []
+
+about:
+  home: http://fmtlib.net
+  summary: Small, safe and fast formatting library
+  license: BSD 2-Clause
+  license_family: BSD
+  license_file: LICENSE.rst

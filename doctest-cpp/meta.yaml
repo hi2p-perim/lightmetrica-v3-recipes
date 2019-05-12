@@ -22,5 +22,5 @@ about:
   home: https://github.com/onqtam/doctest
   summary: The fastest feature-rich C++11/14/17/20 single-header testing framework for unit tests and TDD
   license: MIT
-  license_file: LICENSE.txt
   license_family: MIT
+  license_file: LICENSE.txt
