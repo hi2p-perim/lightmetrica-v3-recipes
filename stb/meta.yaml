@@ -1,0 +1,23 @@
+package:
+  name: stb
+  version: 2.34.0
+
+source:
+  git_url: https://github.com/nothings/stb.git
+  git_rev: 1034f5e5c4809ea0a7f4387e0cd37c5184de3cdd
+  patches:
+    - 0001-basic-cmake-support.patch
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler('cxx') }}
+    - cmake
+  host: []
+
+about:
+  home: https://github.com/nothings/stb
+  summary: stb single-file public domain libraries for C/C++
+  license: PUBLIC-DOMAIN and MIT
