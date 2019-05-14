@@ -1,0 +1,30 @@
+{% set version = "1.70" %}
+{% set sha256 = "0d3ea9c7495df330f7d01d6985fd39976a0305c38352b4d9e54381baeef8ee45" %}
+
+package:
+  name: imgui-glfw
+  version: {{ version }}
+
+source:
+  url: https://github.com/ocornut/imgui/archive/v{{ version }}.tar.gz
+  sha256: {{ sha256 }}
+  patches:
+    - cmake-support.patch
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler('cxx') }}
+    - cmake
+  host:
+    - glew
+    - glfw
+
+about:
+  home: https://github.com/ocornut/imgui
+  summary: Bloat-free Immediate Mode Graphical User interface for C++ with minimal dependencies
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE.txt

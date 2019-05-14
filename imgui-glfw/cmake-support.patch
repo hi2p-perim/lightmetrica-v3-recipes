@@ -1,0 +1,145 @@
+From f254a4b5af1eaacd549b88361602c6f070f2fbba Mon Sep 17 00:00:00 2001
+From: Hisanari Otsu <hi2p.perim@gmail.com>
+Date: Tue, 14 May 2019 18:14:29 +0200
+Subject: [PATCH 1/2] basic cmake support
+
+---
+ CMakeLists.txt             | 83 ++++++++++++++++++++++++++++++++++++++++++++++
+ cmake/imguiConfig.cmake.in |  6 ++++
+ 2 files changed, 89 insertions(+)
+ create mode 100644 CMakeLists.txt
+ create mode 100644 cmake/imguiConfig.cmake.in
+
+diff --git CMakeLists.txt CMakeLists.txt
+new file mode 100644
+index 00000000..56a394a7
+--- /dev/null
++++ CMakeLists.txt
+@@ -0,0 +1,83 @@
++cmake_minimum_required(VERSION 3.10)
++cmake_policy(SET CMP0048 NEW)
++project(imgui VERSION 1.70)
++include(GNUInstallDirs)
++
++# -----------------------------------------------------------------------------
++
++find_package(OpenGL REQUIRED)
++find_package(glew REQUIRED)
++find_package(glfw3 REQUIRED)
++
++# -----------------------------------------------------------------------------
++
++add_library(imgui STATIC 
++    "imgui.cpp"
++    "imgui_draw.cpp"
++    "imgui_widgets.cpp"
++    "imgui_demo.cpp"
++    "examples/imgui_impl_glfw.cpp"
++    "examples/imgui_impl_opengl3.cpp")
++add_library(imgui::imgui ALIAS imgui)
++target_link_libraries(imgui PRIVATE glfw GLEW::GLEW OpenGL::GL)
++target_include_directories(imgui PUBLIC
++    "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>"
++    "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/examples>"
++    "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>/imgui")
++set_target_properties(imgui PROPERTIES DEBUG_POSTFIX "-debug")
++target_compile_definitions(imgui PUBLIC -DIMGUI_IMPL_OPENGL_LOADER_GLEW)
++install(TARGETS imgui EXPORT imguiTargets ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}")
++
++# -----------------------------------------------------------------------------
++
++# Install
++
++# Install include directory
++install(
++    FILES "imconfig.h"
++          "imgui.h"
++          "imgui_internal.h"
++          "examples/imgui_impl_glfw.h"
++          "examples/imgui_impl_opengl3.h"
++    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/imgui"
++)
++
++# Package configuration directory
++set(_PACKAGE_CONFIG_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
++
++# Make package configuration files
++# Use configure_package_config_file to make the package relocatable
++include(CMakePackageConfigHelpers)
++# Generate *Config.cmake file
++configure_package_config_file(
++    "${CMAKE_CURRENT_LIST_DIR}/cmake/${PROJECT_NAME}Config.cmake.in"
++    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
++    INSTALL_DESTINATION ${_PACKAGE_CONFIG_DIR}
++)
++# Generate *ConfigVersion.cmake file
++write_basic_package_version_file(
++    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
++    VERSION ${PROJECT_VERSION}
++    COMPATIBILITY AnyNewerVersion
++)
++# Install generated configuration files
++install(
++    FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
++          "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
++    DESTINATION ${_PACKAGE_CONFIG_DIR}
++)
++
++# Export targets
++# Make export target group
++install(
++    EXPORT ${PROJECT_NAME}Targets
++    FILE ${PROJECT_NAME}Targets.cmake
++    NAMESPACE ${PROJECT_NAME}::
++    DESTINATION ${_PACKAGE_CONFIG_DIR}
++)
++# Generate *Target.cmake file
++export(
++    EXPORT ${PROJECT_NAME}Targets
++    FILE ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Targets.cmake
++    NAMESPACE ${PROJECT_NAME}::
++)
+\ No newline at end of file
+diff --git cmake/imguiConfig.cmake.in cmake/imguiConfig.cmake.in
+new file mode 100644
+index 00000000..11965a13
+--- /dev/null
++++ cmake/imguiConfig.cmake.in
+@@ -0,0 +1,6 @@
++@PACKAGE_INIT@
++
++# Avoid to include the target if it is already loaded.
++if (NOT TARGET imgui::imgui)
++    include(${CMAKE_CURRENT_LIST_DIR}/imguiTargets.cmake)
++endif()
+\ No newline at end of file
+-- 
+2.14.2.windows.1
+
+
+From 01689fce6bbb57bce3f046589c31f7fb922e6bf0 Mon Sep 17 00:00:00 2001
+From: Hisanari Otsu <hi2p.perim@gmail.com>
+Date: Tue, 14 May 2019 19:02:12 +0200
+Subject: [PATCH 2/2] added missing files
+
+---
+ CMakeLists.txt | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git CMakeLists.txt CMakeLists.txt
+index 56a394a7..19c44c1e 100644
+--- CMakeLists.txt
++++ CMakeLists.txt
+@@ -37,6 +37,9 @@ install(
+     FILES "imconfig.h"
+           "imgui.h"
+           "imgui_internal.h"
++          "imstb_rectpack.h"
++          "imstb_textedit.h"
++          "imstb_truetype.h"
+           "examples/imgui_impl_glfw.h"
+           "examples/imgui_impl_opengl3.h"
+     DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/imgui"
+-- 
+2.14.2.windows.1
+
