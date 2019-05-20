@@ -19,3 +19,6 @@ if errorlevel 1 exit 1
 
 cmake --build _build --target install
 if errorlevel 1 exit 1
+
+%PYTHON% -m pip install --no-deps --ignore-installed .
+if errorlevel 1 exit 1

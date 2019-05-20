@@ -16,10 +16,13 @@ requirements:
     - cmake
     - ninja
   host:
+    - pip
+    - python
     - zeromq
     - cppzmq
     - doctest-cpp
     - embree3
+    - glm
     - nlohmann_json
     - pybind11
     - cereal
@@ -28,6 +31,7 @@ requirements:
   run:
     - zeromq
     - embree3
+    - glm
     - nlohmann_json
     - cereal
     - fmt
