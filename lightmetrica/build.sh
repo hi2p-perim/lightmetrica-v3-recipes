@@ -7,3 +7,5 @@ cmake -H. -B_build \
       -D LM_BUILD_EXAMPLES=OFF
 
 cmake --build _build --target install
+
+$PYTHON -m pip install --no-deps --ignore-installed .
