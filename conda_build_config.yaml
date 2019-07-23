@@ -1,3 +1,6 @@
+c_compiler:
+  - vs2017        # [win]
+  - gcc           # [linux]
 cxx_compiler:
   - vs2017        # [win]
   - gxx           # [linux]

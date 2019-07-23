@@ -1,0 +1,26 @@
+{% set version = "1.5.0" %}
+{% set sha256 = "208ba4db0e5116421ed2fbbdf2adfa3e1d133d29a6324a0f47cf2d71f3810c92" %}
+
+package:
+  name: blosc
+  version: {{ version }}
+
+source:
+  url: https://github.com/Blosc/c-blosc/archive/v{{ version }}.tar.gz
+  sha256: {{ sha256 }}
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - cmake
+  host: []
+
+about:
+  home: https://github.com/Blosc/c-blosc
+  license: BSD 3-Clause
+  license_file: LICENSES/BLOSC.txt
+  summary: 'A blocking, shuffling and loss-less compression library that can be faster than `memcpy()`'
