@@ -1,0 +1,40 @@
+{% set version = "6.1.0" %}
+{% set sha256 = "d8803214c245cf0ca14a2c30cd215b183147c03c888c59fc642f213f98b4d68f" %}
+
+package:
+  name: openvdb
+  version: {{ version }}
+
+source:
+  url: https://github.com/AcademySoftwareFoundation/openvdb/archive/v{{ version }}.tar.gz
+  sha256: {{ sha256 }}
+  patches:
+    - cmake-fix.patch
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler('cxx') }}
+    - cmake
+  host:
+    - blosc
+    - openexr
+    - zlib
+    - boost
+    - tbb
+    - tbb-devel
+  run:
+    - blosc
+    - openexr
+    - zlib
+    - boost
+    - tbb
+
+about:
+  home: https://github.com/AcademySoftwareFoundation/openvdb
+  license: MOZILLA
+  license_family: MOZILLA
+  license_file: LICENSE
+  summary: OpenVDB - Sparse volume data structure and tools 
