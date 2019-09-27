@@ -1,0 +1,31 @@
+{% set version = "1.0.0" %}
+
+package:
+  name: vdbloader
+  version: {{ version }}
+
+source:
+  git_url: https://github.com/hi2p-perim/vdbloader.git
+  git_rev: master
+  git_depth: 1
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler('cxx') }}
+    - cmake
+  host:
+    - openvdb
+    - tbb-devel
+  run:
+    - openvdb
+    - tbb
+
+about:
+  home: https://github.com/hi2p-perim/vdbloader
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  summary: Thin C wrapper of OpenVDB for rendering
