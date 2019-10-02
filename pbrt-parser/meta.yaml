@@ -1,0 +1,25 @@
+{% set version = "2.2.0" %}
+
+package:
+  name: pbrt-parser
+  version: {{ version }}
+
+source:
+  git_url: https://github.com/hi2p-perim/pbrt-parser.git
+  git_tag: cmake
+  git_depth: 1
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler('cxx') }}
+    - cmake
+  host: []
+
+about:
+  home: https://github.com/ingowald/pbrt-parser
+  license: Apache License 2.0
+  license_file: LICENSE
+  summary: A simple parser for the PBRT file format
